@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace ToolBox
 {
@@ -131,13 +132,14 @@ namespace ToolBox
 
         public void MainMenu(bool tbMenu)
         {
+            Thread.Sleep(500);
             if (tbMenu)
             {
                 Console.WriteLine("\n--------------------\n******Tool Box******\n--------------------\n");
                 Console.WriteLine("1. Add two numbers ");
                 Console.WriteLine("2. Write to file");
                 Console.WriteLine("3. Read from file");
-                Console.WriteLine("4. Read from file");
+                Console.WriteLine("4. Combine Strings");
                 Console.WriteLine("5. Exit to Main Menu");
                 Console.Write("\nPlease choose an option: ");
             }

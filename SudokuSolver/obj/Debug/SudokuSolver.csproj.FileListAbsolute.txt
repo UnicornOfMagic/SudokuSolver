@@ -1,0 +1,16 @@
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\bin\Debug\SudokuSolver.exe.config
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\bin\Debug\SudokuSolver.exe
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\bin\Debug\SudokuSolver.pdb
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\obj\Debug\SudokuSolver.csprojResolveAssemblyReference.cache
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\obj\Debug\SudokuSolver.exe
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\obj\Debug\SudokuSolver.pdb
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\bin\Debug\ToolBox.dll
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\SudokuSolver\bin\Debug\ToolBox.pdb
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\bin\Debug\SudokuSolver.exe.config
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\obj\Debug\SudokuSolver.exe
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\obj\Debug\SudokuSolver.pdb
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\bin\Debug\SudokuSolver.exe
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\bin\Debug\SudokuSolver.pdb
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\bin\Debug\ToolBox.dll
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\bin\Debug\ToolBox.pdb
+C:\Users\jafeld\Source\Repos\SudokuSolver\SudokuSolver\obj\Debug\SudokuSolver.csprojResolveAssemblyReference.cache

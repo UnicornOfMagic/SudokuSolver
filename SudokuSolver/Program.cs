@@ -1,89 +1,37 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
+using System.Threading;
 using ToolBox;
 
 namespace SudokuSolver
 {
     internal class Program
     {
-        public enum MainMenuChoices
+
+        //So these Enums don't really do too much
+            //(In fact they add a lot of weight)
+        //but I really wanted to use Enums 
+        //....so here are my Enums
+
+        private enum MainMenuChoices
         {
             Sudoku,
             ToolBox,
             Exit,
             Error
         };
-        public enum ToolBoxMenuChoices
+
+        private enum ToolBoxMenuChoices
         {
             AddNumbers,
             WriteToFile,
             ReadFromFile,
+            CombineStrings,
             Exit,
             Error
         };
-        public class Sudoku
-        {
-            private int[,] _board;
 
-
-            public Sudoku(int[,] board)
-            {
-                _board = board;
-            }
-
-            public Sudoku()
-            {
-                _board = new int[9, 9];
-            }
-
-            public bool NumberAt(int x, int y, int num)
-            {
-                //check rows and columns for number
-                for (var i = 0; i < 9; i++)
-                    if (_board[x, i] == num) return false;
-                    else if (_board[i, y] == num) return false;
-
-                //find out which cell we are in
-                var xCell = x / 3;
-                var yCell = y / 3;
-                xCell *= 3;
-                yCell *= 3;
-                for (var i = 0; i < 3; i++)
-                    for (var j = 0; j < 3; j++)
-                        if (_board[i + xCell, j + yCell] == num) return false;
-
-                //if all test passed, then true
-                return true;
-            }
-
-            public static bool NumberAt(int[,] grid, int x, int y, int num)
-            {
-                throw new NotImplementedException("AHHHHHHHHHHHHHHHHHHH I FORGOT ABOUT YODA");
-            }
-
-            /*----------------- Copies grid --------------*/
-            public int[,] CopyBoard()
-            {
-                var board = new int[9, 9];
-                for (var i = 0; i < 9; i++)
-                    for (var j = 0; j < 9; j++)
-                        board[i, j] = _board[i, j];
-
-                return board;
-            }
-
-            /*----------------- Prints Grid --------------------------*/
-            public void PrintBoard()
-            {
-                Console.WriteLine("****Current Board****\n");
-                for (var i = 0; i < 9; i++)
-                {
-                    for (var j = 0; j < 9; j++)
-                        Console.Write(_board[i, j] + " ");
-                    Console.WriteLine();
-                }
-            }
-        }
+        //Look I didn't use a SudokuMenuChoices enum!
 
         private static void Main(string[] args)
         {
@@ -101,8 +49,8 @@ namespace SudokuSolver
                 {
                     Console.WriteLine("\nAnything else I can do for you?\n");
                 }
-                tb.MainMenu(tbMenu: false);
-                var userInput = Console.ReadLine() ?? "0";
+                tb.MainMenu(false);
+                var userInput = Console.ReadKey().KeyChar.ToString();
                 int intUserInput;
                 int.TryParse(userInput, out intUserInput);
                 MainMenuChoices choice;
@@ -128,7 +76,7 @@ namespace SudokuSolver
                         choice = MainMenuChoices.Error;
                         break;
                     }
-                }//end switch(intUserInput)
+                } //end switch(intUserInput)
 
                 switch (choice)
                 {
@@ -144,389 +92,51 @@ namespace SudokuSolver
                         break;
                     case MainMenuChoices.Exit:
                         Console.Write("\nAre you sure you want to exit (y/n, default = n)? : ");
-                        userInput = Console.ReadLine() ?? "N";
+                        userInput = Console.ReadKey().KeyChar.ToString();
                         if (!userInput.ToUpper().StartsWith("Y"))
                         {
                             Console.WriteLine("\nYay!!!\n");
                         }
                         else
                         {
-                            Console.WriteLine("\n-------------\n***Kthxbai***\n-------------\n");
+                            Console.Write("\nLOADING EXIT PROGRAM..");
+                            Thread.Sleep(1000);
+                            Console.Write(".");
+                            Thread.Sleep(300);
+                            Console.Write(".");
+                            Thread.Sleep(250);
+                            Console.Write(".");
+                            Thread.Sleep(400);
+                            Console.Write(".");
+                            Thread.Sleep(100);
+                            Console.Write(".");
+                            Thread.Sleep(50);
+                            Console.Write(".");
+                            Thread.Sleep(200);
+                            Console.WriteLine(".");
+                            Console.WriteLine("LOADING COMPLETE");
+                            Console.Write("EXECUTING");
+                            Thread.Sleep(100);
+                            Console.Write(".");
+                            Thread.Sleep(200);
+                            Console.Write(".");
+                            Thread.Sleep(300);
+                            Console.WriteLine(".");
+                            Console.WriteLine("EXITING");
+                            Console.WriteLine("\n-------------\n***KTHXBAI***\n-------------\n");
                             exit = true;
                         }
                         break;
-                }//end switch(choice) -- YES I KNOW THIS IS POINTLESS
+                } //end switch(choice) -- YES I KNOW THIS IS POINTLESS
+            } //end while(!exit)
 
-            }//end while(!exit)
-
-            /*------JAVA SOURCE CODE------*/
-            //import java.util.Stack;
-
-
-            //public class suDoku 
-            //{
-            //    /*----------- Returns true if a number can go into a cell------*/
-            //    public static boolean numberAt(int[][] grid, int x, int y, int num)
-            //    {
-            //        //check rows and columns for number
-            //        for (int i = 0; i < 9; i++)
-            //            if (grid[x][i] == num) return false; 
-            //            else if (grid[i][y] == num) return false;
-
-            //        //find out which cell we are in
-            //        int xCell = x / 3;
-            //        int yCell = y / 3;
-            //        xCell *= 3;
-            //        yCell *= 3;
-            //        for (int i = 0; i < 3; i++)
-            //            for (int j = 0; j < 3; j++)
-            //                if (grid[i + xCell][j + yCell] == num) return false;
-
-            //        //if all test passed, then true
-            //        return true;
-            //    }
-
-            //    /*----------------- Copies grid --------------*/
-            //    public static void copyGrid(int[][] grid, int[][] gridB)
-            //    {
-            //          for(int i = 0; i < 9; i++)
-            //              for(int j = 0; j < 9; j++)
-            //                gridB[i][j] = grid[i][j];
-            //    }
-
-            //    /*----------------- Prints Grid --------------------------*/
-            //    public static void printGrid(int[][] grid)
-            //    {
-            //        for (int i = 0; i < 9; i++)
-            //        {
-            //            for (int j = 0; j < 9; j++)
-            //                System.out.print(grid[i][j] + " ");
-            //            System.out.println();
-            //        }
-            //    }
-            //    /*-----------------------Brute Force Algorithm-------------------*/
-            //    /*
-            //     * This method solves a Sudoku puzzle by finding the first empty cell
-            //     * and putting the first number it finds can be inserted. It then puts
-            //     * the new grid into a stack and moves on. It continues until it finds 
-            //     * a solution or until the stack is empty. 
-            //     * 
-            //     * If true was passed into the method then it will solve with Heuristics.
-            //     * The Heuristics will find numbers that will only go in one cell and then
-            //     * add them in. After this can't find a number that only goes in one place
-            //     * it will move on to the brute force method.
-            //     */
-            //    public static int[][] bruteForce(int[][]grid, boolean heuristics)
-            //    {
-            //        int pushCounter = 1; //Counts how many times the grid gets pushed
-            //        Stack<int[][]> stack = new Stack<int[][]>();
-            //        stack.push(grid);
-            //        boolean solved = false;
-            //        boolean found = false; //no empty cell, or dead end
-            //        while (!stack.isEmpty() && !solved) //loops until solution is fount or the stack is empty
-            //        {
-            //            grid = (int[][]) stack.pop(); //pops off the stack for next loop
-            //            if(heuristics) heuristics2(grid); //does heuristics if boolean is true
-            //            for (int x = 0; x < 9 && !found; x++) //increments x value
-            //            {
-            //                for (int y = 0; y < 9 && !found; y++) //increments y value 
-            //                {
-            //                    if (grid[x][y] == 0) //if it's an empty cell then call numberAt method
-            //                    {
-            //                        found = true;
-            //                        for (int num = 1; num < 10; num++) //loops through numbers 1-9 for numberAt method call
-            //                            if(numberAt(grid, x, y, num)) //if a number can go in the cell grid, copy grid, 
-            //                            {							  //put in potential answer, and push copy into stack
-            //                                int[][] gridB =  new int[9][9];
-            //                                copyGrid(grid,gridB);
-            //                                gridB[x][y] = num;
-            //                                stack.push(gridB);
-            //                                pushCounter += 1;
-            //                            }
-            //                    }
-            //                }
-            //            }
-            //            if (found) found = false;
-            //            else solved = true;
-            //        }
-            //        System.out.println("Push Counter : " + pushCounter);
-            //        return grid;
-            //    }
-
-            //    /*---------------------- Heuristic Method -------------------------------*/
-            //    /*
-            //     * This method solves a Sudoku grid by first trying to find a number that
-            //     * has the least amount of possibilities to go into a cell. It then 
-            //     * puts that number in the cell and moves on. If it gets stuck it falls back
-            //     * to a brute force method. 
-            //     */
-            //    public static int[][] leastDigitChoice(int[][]grid, boolean heuristic)
-            //    {
-            //        int pushCounter = 1; //Counts how many times the grid gets pushed
-            //        Stack<int[][]> stack = new Stack<int[][]>();
-            //        stack.push(grid);
-            //        boolean solved = false;
-            //        boolean found = false; //no empty cell, or dead end
-            //        while (!stack.isEmpty() && !solved) //loops until solution is fount or the stack is empty
-            //        {
-            //            grid = (int[][]) stack.pop(); //pops off the stack for next loop
-            //            if(heuristic) heuristics2(grid); //does heuristics if boolean is true
-            //            int rowBestCell = 0;
-            //            int colBestCell = 0;
-            //            int minChoices = 9;
-            //            for (int x = 0; x < 9; x++) //increments x value
-            //            {
-            //                for (int y = 0; y < 9; y++) //increments y value 
-            //                {
-            //                    if (grid[x][y] == 0) //if it's an empty cell then call numberAt method
-            //                    {
-            //                        found = true;
-            //                        int choices = 0;
-            //                        for (int num = 1; num < 10; num++)
-            //                            if(numberAt(grid, x, y, num))
-            //                            {
-            //                                choices++;
-            //                            }
-            //                        if (choices < minChoices) 
-            //                            {
-            //                                minChoices = choices;
-            //                                rowBestCell = x;
-            //                                colBestCell = y;
-            //                            }
-            //                    }
-            //                }
-            //            }
-
-
-            //                        for (int num = 1; num < 10; num++) //loops through numbers 1-9 for numberAt method call
-            //                            if(numberAt(grid, rowBestCell, colBestCell, num)) //if a number can go in the cell grid, copy grid, 
-            //                            {							  //put in potential answer, and push copy into stack
-            //                                int[][] gridB =  new int[9][9];
-            //                                copyGrid(grid,gridB);
-            //                                gridB[rowBestCell][colBestCell] = num;
-            //                                stack.push(gridB);
-            //                                pushCounter += 1;
-            //                            }
-            //            if (found) found = false;
-            //            else solved = true;
-            //        }
-            //        System.out.println("Push Counter : " + pushCounter);
-            //        return grid;
-            //    }
-
-            //    /*----------------------------- Heuristic Least Number of Cell Choice --------------------------*/
-            //    /*
-            //     * 
-            //     */
-            //    public static void heuristics2(int[][]grid)
-            //    {
-            //        boolean numberPlaced = false;
-
-
-            //        do
-            //        {
-            //            numberPlaced = false;
-            //            //rows
-            //            for (int num = 1; num <= 9; num++)
-            //            {
-            //                for (int x = 0; x <= 8; x++)
-            //                {
-            //                    int bestY = 0;
-            //                    int possibilities = 0;
-            //                    for (int y = 0; y <= 8; y++)
-            //                    {
-            //                        if((grid[x][y] == 0) && (numberAt(grid, x, y, num)))
-            //                            {
-            //                                possibilities++;
-            //                                bestY = y;
-            //                            }
-            //                    }
-
-            //                    if(possibilities == 1)
-            //                    {
-            //                        grid[x][bestY] = num;
-            //                        numberPlaced = true;
-            //                    }
-            //                }
-            //            }
-
-            //            //columns
-            //            for (int num = 1; num <= 9; num++)
-            //            {
-            //                for (int y = 0; y <= 8; y++)
-            //                {
-            //                    int bestX = 0;
-            //                    int possibilities = 0;
-            //                    for (int x = 0; x <= 8; x++)
-            //                    {
-            //                        if((grid[x][y] == 0) && (numberAt(grid, x, y, num)))
-            //                            {
-            //                                possibilities++;
-            //                                bestX = x;
-            //                            }
-            //                    }
-
-            //                    if(possibilities == 1)
-            //                    {
-            //                        grid[bestX][y] = num;
-            //                        numberPlaced = true;
-            //                    }
-            //                }
-            //            }
-
-            //            //cells
-            //            for(int num = 1; num <= 9; num++)
-            //            {
-            //                for(int xCell = 0; xCell <= 6; xCell += 3)
-            //                {
-            //                    for(int yCell = 0; yCell <= 6; yCell += 3)
-            //                    {
-            //                        int possibilities = 0;
-            //                        int bestX = 0;
-            //                        int bestY = 0;
-            //                        for(int x = 0; x <= 2; x++)
-            //                        {
-            //                            for(int y = 0; y <= 2; y++)
-            //                            {
-            //                                if((grid[xCell + x][yCell + y] == 0) && (numberAt(grid, (xCell + x), (yCell + y), num)))
-            //                                {
-            //                                    possibilities++;
-            //                                    bestX = xCell + x;
-            //                                    bestY = yCell + y;
-            //                                }
-            //                            }//end for y
-            //                        }//end for x
-            //                        if (possibilities == 1)
-            //                        {
-            //                            grid[bestX][bestY] = num;
-            //                            numberPlaced = true;
-            //                        }
-            //                    }//end for yCell
-            //                }//end for xCell
-            //            }//end for num
-            //        }while(numberPlaced);
-            //    }
-
-            //    public static void main(String[] args) 
-            //    {
-            //        //test cases
-            //        int [][]grid = {{ 4,6,0,0,0,1,0,0,0},
-            //                        { 0,0,2,0,9,6,0,0,0},
-            //                        { 0,3,0,0,0,0,0,6,8},
-            //                        { 0,0,0,0,0,0,0,3,7},
-            //                        { 0,0,0,6,0,7,0,0,0},
-            //                        { 5,1,0,0,0,0,0,0,0},
-            //                        { 8,4,0,0,0,0,0,5,0},
-            //                        { 0,0,0,7,1,0,9,0,0},
-            //                        { 0,0,0,3,0,0,0,2,4}};
-
-            //        /*int [][]grid = {{ 0,0,6,0,0,8,5,0,0},
-            //                        { 0,0,0,0,7,0,6,1,3},
-            //                        { 0,0,0,0,0,0,0,0,9},
-            //                        { 0,0,0,0,9,0,0,0,1},
-            //                        { 0,0,1,0,0,0,8,0,0},
-            //                        { 4,0,0,5,3,0,0,0,0},
-            //                        { 1,0,7,0,5,3,0,0,0},
-            //                        { 0,5,0,0,6,4,0,0,0},
-            //                        { 3,0,0,1,0,0,0,6,0}};
-            //        int[][] grid = {{3, 0, 0,  0, 0, 0,  1, 0, 0},
-            //                        {0, 2, 0,  3, 1, 0,  0, 0, 5},
-            //                        {0, 0, 0,  2, 0, 0,  0, 3, 7},
-
-            //                        {0, 0, 1,  0, 5, 0,  0, 0, 6},
-            //                        {0, 0, 5,  4, 0, 3,  7, 0, 0},
-            //                        {2, 0, 0,  0, 6, 0,  9, 0, 0},
-
-            //                        {4, 7, 0,  0, 0, 8,  0, 0, 0},
-            //                        {6, 0, 0,  0, 2, 4,  0, 9, 0},
-            //                        {0, 0, 2,  0, 0, 0,  0, 0, 8}};*/
-            //		int[][] grid = {{0, 0, 0,  3, 9, 0,  0, 1, 0},
-            //                        {5, 0, 1,  0, 0, 0,  0, 4, 0},
-            //                        {9, 0, 0,  7, 0, 0,  5, 0, 0},
-
-            //                        {6, 0, 2,  5, 3, 0,  0, 7, 0},
-            //                        {0, 0, 0,  0, 7, 0,  0, 0, 8},
-            //                        {7, 0, 0,  8, 0, 0,  9, 0, 3},
-
-            //                        {8, 0, 3,  0, 1, 0,  0, 9, 0},
-            //                        {0, 9, 0,  2, 0, 6,  0, 0, 7},
-            //                        {4, 0, 0,  0, 0, 3,  0, 6, 1}};
-
-            //        /*------------solved grid---------*/
-            //         /*{{2, 4, 8,  3, 9, 5,  7, 1, 6},
-            //            {5, 7, 1,  6, 2, 8,  3, 4, 9},
-            //            {9, 3, 6,  7, 4, 1,  5, 8, 2},
-
-            //            {6, 8, 2,  5, 3, 9,  1, 7, 4},
-            //            {3, 5, 9,  1, 7, 4,  6, 2, 8},
-            //            {7, 1, 4,  8, 6, 2,  9, 5, 3},
-
-            //            {8, 6, 3,  4, 1, 7,  2, 9, 5},
-            //            {1, 9, 5,  2, 8, 6,  4, 3, 7},
-            //            {4, 2, 7,  9, 5, 3,  8, 6, 1}};*/
-            //		int[][] grid = {{0, 0, 0,  3, 9, 0,  0, 1, 0},
-            //                        {5, 0, 1,  6, 2, 8,  3, 4, 9},
-            //                        {9, 3, 6,  7, 4, 1,  5, 8, 2},
-
-            //                        {6, 8, 2,  5, 3, 9,  1, 7, 4},
-            //                        {3, 5, 9,  1, 7, 4,  6, 2, 8},
-            //                        {7, 1, 4,  8, 6, 2,  9, 5, 3},
-
-            //                        {8, 6, 3,  4, 1, 7,  2, 9, 5},
-            //                        {1, 9, 5,  2, 8, 6,  4, 3, 7},
-            //                        {4, 2, 7,  9, 5, 3,  8, 6, 1}};
-            //        /*--------------------- End Test grids----------------------*/
-            //        int[][] grid2 = new int[9][9];
-            //        int[][] grid3 = new int[9][9];
-            //        int[][] grid4 = new int[9][9];
-            //        copyGrid(grid, grid2);
-            //        copyGrid(grid, grid3);
-            //        copyGrid(grid, grid4);
-
-            //        /*-------- Test Brute Force ---------------*/
-            //        System.out.println("Brute Force: ");
-            //        long startTime = System.currentTimeMillis();
-            //        grid = bruteForce(grid, false);
-            //        printGrid(grid);
-            //        long endTime = System.currentTimeMillis();
-            //        System.out.println();
-            //        System.out.println("Brute force takes :" + (endTime - startTime) + "ms");
-
-            //        /*-------- Test Heuristic 1 ---------------*/
-            //        System.out.println("Heuristic 1: ");
-            //        startTime = System.currentTimeMillis();
-            //        grid2 = leastDigitChoice(grid2, false);
-            //        printGrid(grid2);
-            //        endTime = System.currentTimeMillis();
-            //        System.out.println();
-            //        System.out.println("Heuristic 1 takes :" + (endTime - startTime) + "ms");
-
-            //        /*-------- Test Heuristic 2 ---------------*/
-            //        System.out.println("Heuristic 2: ");
-            //        startTime = System.currentTimeMillis();
-            //        grid3 = bruteForce(grid3, true);
-            //        printGrid(grid3);
-            //        endTime = System.currentTimeMillis();
-            //        System.out.println();
-            //        System.out.println("Heuristic 2 (brute force) :" + (endTime - startTime) + "ms");
-
-            //        /*-------- Test Heuristic 2 with Heuristic 1 ---------------*/
-            //        System.out.println("Heuristic 2 with Heuristic 1: ");
-            //        startTime = System.currentTimeMillis();
-            //        grid4 = leastDigitChoice(grid4, true);
-            //        printGrid(grid4);
-            //        endTime = System.currentTimeMillis();
-            //        System.out.println();
-            //        System.out.println("Heuristic 2 with Heuristic 1 takes :" + (endTime - startTime) + "ms");
-            //    }
-
-            //}
         }
 
         private static void DoToolBox(Tools tb)
         {
             var firstRun = true;
             var exit = false;
+            var theString = "";
             while (!exit)
             {
                 if (firstRun)
@@ -540,7 +150,7 @@ namespace SudokuSolver
                 }
                 tb.MainMenu(true);
                 ToolBoxMenuChoices choice;
-                var userInput = Console.ReadLine() ?? "0";
+                var userInput = Console.ReadKey().KeyChar.ToString();
                 int intUserInput;
                 int.TryParse(userInput, out intUserInput);
                 switch (intUserInput)
@@ -562,6 +172,11 @@ namespace SudokuSolver
                     }
                     case 4:
                     {
+                        choice = ToolBoxMenuChoices.CombineStrings;
+                        break;
+                    }
+                    case 5:
+                    {
                         choice = ToolBoxMenuChoices.Exit;
                         break;
                     }
@@ -582,8 +197,12 @@ namespace SudokuSolver
                         Console.WriteLine("You chose read from file!");
                         break;
                     case ToolBoxMenuChoices.WriteToFile:
-                        DoWriteToFile();
+                        DoWriteToFile(theString);
                         Console.WriteLine("You chose write to file!");
+                        break;
+                    case ToolBoxMenuChoices.CombineStrings:
+                        theString = DoCombineStrings();
+                        Console.WriteLine("Program returned: " + theString);
                         break;
                     case ToolBoxMenuChoices.Exit:
                         Console.WriteLine("\n-------------------\n**Toolbox Closing**\n-------------------\n");
@@ -592,14 +211,76 @@ namespace SudokuSolver
                     case ToolBoxMenuChoices.Error:
                         Console.WriteLine("Invalid choice!");
                         break;
-                }//end switch(choice) -- YES I KNOW THIS IS POINTLESS
-
-            }//End while(!exit)
+                } //end switch(choice) -- YES I KNOW THIS IS POINTLESS
+            } //End while(!exit)
         }
 
-        private static void DoWriteToFile()
+        private static string DoCombineStrings()
         {
-            throw new NotImplementedException();
+            var result = "";
+            var exit = false;
+            var done = false;
+            while (!done)
+            {
+                var i = 1;
+                var finished = new string[i];
+                string userInput;
+                while (!exit)
+                {
+                    Console.Write("Input string to combine (just press Enter to stop): ");
+                    userInput = Console.ReadLine();
+                    if (!userInput.Equals(""))
+                    {
+                        finished[i - 1] = userInput;
+
+                        var temp = new string[i];
+                        for (var index = 0; index < finished.Length; index++)
+                        {
+                            var s = finished[index];
+                            temp[index] = s;
+                        }
+
+                        finished = new string[i + 1];
+
+                        for (var index = 0; index < temp.Length; index++)
+                        {
+                            var s = temp[index];
+                            finished[index] = s;
+                        }
+                    }
+                    else
+                    {
+                        exit = true;
+                    }
+                    i++;
+                }
+
+                result = Tools.CombineStrings(finished);
+
+                Console.WriteLine("Your completed string:\n----------------------");
+                Console.WriteLine(result);
+                Console.Write("\n\nIs this the string you want (y/n, default = y)? : ");
+                userInput = Console.ReadLine();
+                if (!userInput.ToUpper().StartsWith("Y"))
+                {
+                    Console.WriteLine("\n-------------\n**Resetting**\n-------------\n");
+                    result = "";
+                    exit = false;
+                }
+                else
+                {
+                    done = true;
+                }
+            }
+            return result;
+        }
+
+        private static void DoWriteToFile(string theString)
+        {
+            if (theString.Equals(""))
+            {
+                Console.WriteLine("\nYou haven't made a string yet!\n\nRunning stringCombiner...");
+            }
         }
 
         private static void DoReadFromFile()
@@ -616,16 +297,16 @@ namespace SudokuSolver
             Console.WriteLine("Type 0 into both blanks to exit!");
             while (!exit)
             {
-                Console.Write("First Number: ");
-                var userInput = Console.ReadLine();
+                Console.Write("Equation: ");
+                var userInput = Console.ReadKey().KeyChar.ToString();
                 int x;
                 if (!int.TryParse(userInput, out x))
                 {
                     Console.WriteLine("\n**Invalid Entry**\n");
                     continue;
                 }
-                Console.Write("Second Number: ");
-                userInput = Console.ReadLine();
+                Console.Write(" + ");
+                userInput = Console.ReadKey().KeyChar.ToString();
                 int y;
                 if (!int.TryParse(userInput, out y))
                 {
@@ -635,25 +316,401 @@ namespace SudokuSolver
                 if (x == 0 && y == 0) exit = true;
                 else
                 {
-                    var z = x + y;
-                    Console.WriteLine(x + " + " + y + " = " + z + "\n");
+                    var z = Tools.AddNumbers(x, y);
+                    Console.WriteLine(" = " + z);
                 }
             }
         }
 
         private static void DoSudoku()
         {
-            var chill = new[,] {{1, 2, 3, 4, 5, 6, 7, 8, 9}, 
-                                {9, 1, 2, 3, 4, 5, 6, 7, 8}, 
-                                {8, 9, 1, 2, 3, 4, 5, 6, 7}, 
-                                {7, 8, 9, 1, 2, 3, 4, 5, 6}, 
-                                {6, 7, 8, 9, 1, 2, 3, 4, 5}, 
-                                {5, 6, 7, 8, 9, 1, 2, 3, 4}, 
-                                {4, 5, 6, 7, 8, 9, 1, 2, 3}, 
-                                {3, 4, 5, 6, 7, 8, 9, 1, 2}, 
-                                {2, 3, 4, 5, 6, 7, 8, 9, 1}};
+            var chill = new[,]
+
+            {
+                {0, 0, 0, 3, 9, 0, 0, 1, 0},
+                {5, 0, 1, 0, 0, 0, 0, 4, 0},
+                {9, 0, 0, 7, 0, 0, 5, 0, 0},
+                {6, 0, 2, 5, 3, 0, 0, 7, 0},
+                {0, 0, 0, 0, 7, 0, 0, 0, 8},
+                {7, 0, 0, 8, 0, 0, 9, 0, 3},
+                {8, 0, 3, 0, 1, 0, 0, 9, 0},
+                {0, 9, 0, 2, 0, 6, 0, 0, 7},
+                {4, 0, 0, 0, 0, 3, 0, 6, 1}
+                /*{0, 2, 3, 4, 5, 6, 7, 8, 9},
+                {9, 1, 2, 3, 4, 5, 6, 7, 8},
+                {8, 9, 1, 2, 3, 4, 5, 6, 7},
+                {7, 8, 9, 1, 2, 3, 4, 5, 6},
+                {6, 7, 8, 9, 1, 2, 3, 4, 5},
+                {5, 6, 7, 8, 9, 1, 2, 3, 4},
+                {4, 5, 6, 7, 8, 9, 1, 2, 3},
+                {3, 4, 5, 6, 7, 8, 9, 1, 2},
+                {2, 3, 4, 5, 6, 7, 8, 9, 1}*/
+            };
             var sudoku = new Sudoku(chill);
+            var exit = false;
+            //sudoku.PrintBoard();
+
+            while (!exit)
+            {
+                Console.WriteLine("\n--------------------\nSUDOKU CONTROL PANEL\n--------------------\n");
+                Console.WriteLine("1 Solve it!");
+                Console.WriteLine("2 Try placing a number");
+                Console.WriteLine("3 View current board");
+                Console.WriteLine("4 Enter a new board");
+                Console.WriteLine("5 Exit");
+
+                Console.Write("Enter your menu choice: ");
+                var userInput = Console.ReadKey().KeyChar.ToString();
+
+                switch (userInput)
+                {
+                    case "1":
+                        DoSolveIt(sudoku);
+                        break;
+                    case "2":
+                        DoNumberPlacer(sudoku);
+                        break;
+                    case "3":
+                        Console.WriteLine("\nYou have selected View current board");
+                        break;
+                    case "4":
+                        Console.WriteLine("\nYou have selected Enter a new board");
+                        break;
+                    case "5":
+                        Console.WriteLine("\n**EXITING SUDOKU**");
+                        Thread.Sleep(500);
+                        Console.WriteLine("Cleaning Board");
+                        Thread.Sleep(250);
+                        Console.WriteLine("Replacing Board");
+                        Thread.Sleep(500);
+                        Console.WriteLine("Wasting Time...");
+                        Thread.Sleep(100);
+                        Console.WriteLine("\n**EXITING**\n");
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("\n***INVALID ENTRY***");
+                        break;
+                }
+            }
+        }
+
+        private static void DoSolveIt(Sudoku sudoku)
+        {
+            Console.Write("\nShould I solve it the fast way?: ");
+            var heuristic = Console.ReadKey().KeyChar.ToString().ToUpper().Equals("Y");
+            Console.WriteLine("\n**SOLVING**");
+            Thread.Sleep(1000);
+            sudoku.BruteForce(heuristic);
+            Console.WriteLine("**SOLVED**");
             sudoku.PrintBoard();
+        }
+
+        private static void DoNumberPlacer(Sudoku sudoku)
+        {
+            Console.WriteLine("\n*********************\n*********************");
+            var done = false;
+            while (!done)
+            {
+                sudoku.PrintBoard();
+                Console.Write("\nPlease insert number to try (1-9): ");
+                var userInput = Console.ReadKey().KeyChar.ToString();
+                int num;
+                if (!int.TryParse(userInput, out num) || num == 0)
+                {
+                    Console.WriteLine("\n***INVALID ENTRY***");
+                    continue;
+                }
+                Console.Write("\nPlease insert x location to place (1-9): ");
+                userInput = Console.ReadKey().KeyChar.ToString();
+                int x;
+                if (int.TryParse(userInput, out x) && x != 0)
+                {
+                    Console.Write("\nPlease insert y location to place (1-9): ");
+                    userInput = Console.ReadKey().KeyChar.ToString();
+                    int y;
+                    if (int.TryParse(userInput, out y) && y != 0)
+                    {
+                        Console.WriteLine("\n{0} can be placed at ({1}, {2}): {3}", num, x, y,
+                            sudoku.NumberAt(x - 1, y - 1, num));
+                        done = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n***INVALID ENTRY***");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n***INVALID ENTRY***");
+                }
+            }
+        }
+
+        public class Sudoku
+        {
+            private int[,] _board;
+
+            public Sudoku(int[,] board)
+            {
+                _board = board;
+            }
+
+            public Sudoku()
+            {
+                _board = new int[9, 9];
+            }
+
+            public bool NumberAt(int x, int y, int num)
+            {
+                //check rows and columns for number
+                for (var i = 0; i < 9; i++)
+                    if (_board[x, i] == num) return false;
+                    else if (_board[i, y] == num) return false;
+
+                //find out which cell we are in
+                var xCell = x/3;
+                var yCell = y/3;
+                xCell *= 3;
+                yCell *= 3;
+                for (var i = 0; i < 3; i++)
+                    for (var j = 0; j < 3; j++)
+                        if (_board[i + xCell, j + yCell] == num) return false;
+
+                //if all test passed, then true
+                return true;
+            }
+
+            /*----------------- Copies grid --------------*/
+
+            public int[,] CopyBoard()
+            {
+                var board = new int[9, 9];
+                for (var i = 0; i < 9; i++)
+                    for (var j = 0; j < 9; j++)
+                        board[i, j] = _board[i, j];
+
+                return board;
+            }
+
+            /*----------------- Prints Grid --------------------------*/
+
+            public void PrintBoard()
+            {
+                Console.WriteLine("****Current Board****\n");
+                for (var i = 0; i < 9; i++)
+                {
+                    for (var j = 0; j < 9; j++)
+                        Console.Write(_board[i, j] + " ");
+                    Console.WriteLine();
+                }
+            }
+
+            /*-----------------------Brute Force Algorithm-------------------*/
+            /*
+             * This method solves a Sudoku puzzle by finding the first empty cell
+             * and putting the first number it finds can be inserted. It then puts
+             * the new grid into a stack and moves on. It continues until it finds 
+             * a solution or until the stack is empty. 
+             * 
+             * If true was passed into the method then it will solve with Heuristics.
+             * The Heuristics will find numbers that will only go in one cell and then
+             * add them in. After this can't find a number that only goes in one place
+             * it will move on to the brute force method.
+             */
+
+            public int[,] BruteForce(bool heuristics)
+            {
+                var pushCounter = 1; //Counts how many times the grid gets pushed
+                var stack = new Stack<int[,]>();
+                stack.Push(_board);
+                var solved = false;
+                var found = false; //no empty cell, or dead end
+                while (!stack.Equals(new Stack<int[,]>()) && !solved)
+                    //loops until solution is fount or the stack is empty
+                {
+                    _board = stack.Pop(); //pops off the stack for next loop
+                    if (heuristics) Heuristics2(_board); //does heuristics if boolean is true
+                    for (var x = 0; x < 9 && !found; x++) //increments x value
+                    {
+                        for (var y = 0; y < 9 && !found; y++) //increments y value 
+                        {
+                            if (_board[x, y] == 0) //if it's an empty cell then call numberAt method
+                            {
+                                found = true;
+                                for (var num = 1; num < 10; num++) //loops through numbers 1-9 for numberAt method call
+                                    if (NumberAt(x, y, num)) //if a number can go in the cell grid, copy grid, 
+                                    {
+                                        //put in potential answer, and push copy into stack
+                                        var gridB = CopyBoard();
+                                        gridB[x, y] = num;
+                                        stack.Push(gridB);
+                                        pushCounter += 1;
+                                    }
+                            }
+                        }
+                    }
+                    if (found) found = false;
+                    else solved = true;
+                }
+                Console.WriteLine("\nSteps Taken : " + pushCounter);
+                return _board;
+            }
+
+            /*---------------------- Heuristic Method -------------------------------*/
+            /*
+             * This method solves a Sudoku grid by first trying to find a number that
+             * has the least amount of possibilities to go into a cell. It then 
+             * puts that number in the cell and moves on. If it gets stuck it falls back
+             * to a brute force method. 
+             */
+
+            public int[,] LeastDigitChoice(bool heuristic)
+            {
+                var pushCounter = 1; //Counts how many times the grid gets pushed
+                var stack = new Stack<int[,]>();
+                stack.Push(_board);
+                var solved = false;
+                var found = false; //no empty cell, or dead end
+                while (!stack.Equals(new Stack<int[,]>()) && !solved)
+                    //loops until solution is found or the stack is empty
+                {
+                    _board = stack.Pop(); //pops off the stack for next loop
+                    if (heuristic) Heuristics2(_board); //does heuristics if boolean is true
+                    var rowBestCell = 0;
+                    var colBestCell = 0;
+                    var minChoices = 9;
+                    for (var i = 0; i < 9; i++) //increments x value
+                    {
+                        for (var j = 0; j < 9; j++) //increments y value 
+                        {
+                            if (_board[i, j] == 0) //if it's an empty cell then call numberAt method
+                            {
+                                found = true;
+                                var choices = 0;
+                                for (var number = 1; number < 10; number++)
+                                    if (NumberAt(i, j, number))
+                                    {
+                                        choices++;
+                                    }
+                                if (choices < minChoices)
+                                {
+                                    minChoices = choices;
+                                    rowBestCell = i;
+                                    colBestCell = j;
+                                }
+                            }
+                        }
+                    }
+                    for (var num = 1; num < 10; num++) //loops through numbers 1-9 for numberAt method call
+                        if (NumberAt(rowBestCell, colBestCell, num)) //if a number can go in the cell grid, copy grid, 
+                        {
+                            //put in potential answer, and push copy into stack
+                            var gridB = CopyBoard();
+                            gridB[rowBestCell, colBestCell] = num;
+                            stack.Push(gridB);
+                            pushCounter += 1;
+                        }
+                    if (found) found = false;
+                    else solved = true;
+                }
+                Console.WriteLine("Push Counter : " + pushCounter);
+                return _board;
+            }
+
+            /*----------------------------- Heuristic Least Number of Cell Choice --------------------------*/
+            /*
+             * 
+             */
+
+            public void Heuristics2(int[,] grid)
+            {
+                bool numberPlaced;
+
+
+                do
+                {
+                    numberPlaced = false;
+                    //rows
+                    for (var num = 1; num <= 9; num++)
+                    {
+                        for (var x = 0; x <= 8; x++)
+                        {
+                            var bestY = 0;
+                            var possibilities = 0;
+                            for (var y = 0; y <= 8; y++)
+                            {
+                                if ((grid[x, y] == 0) && (NumberAt(x, y, num)))
+                                {
+                                    possibilities++;
+                                    bestY = y;
+                                }
+                            }
+
+                            if (possibilities == 1)
+                            {
+                                grid[x, bestY] = num;
+                                numberPlaced = true;
+                            }
+                        }
+                    }
+
+                    //columns
+                    for (var num = 1; num <= 9; num++)
+                    {
+                        for (var y = 0; y <= 8; y++)
+                        {
+                            var bestX = 0;
+                            var possibilities = 0;
+                            for (var x = 0; x <= 8; x++)
+                            {
+                                if ((grid[x, y] == 0) && (NumberAt(x, y, num)))
+                                {
+                                    possibilities++;
+                                    bestX = x;
+                                }
+                            }
+
+                            if (possibilities == 1)
+                            {
+                                grid[bestX, y] = num;
+                                numberPlaced = true;
+                            }
+                        }
+                    }
+
+                    //cells
+                    for (var num = 1; num <= 9; num++)
+                    {
+                        for (var xCell = 0; xCell <= 6; xCell += 3)
+                        {
+                            for (var yCell = 0; yCell <= 6; yCell += 3)
+                            {
+                                var possibilities = 0;
+                                var bestX = 0;
+                                var bestY = 0;
+                                for (var x = 0; x <= 2; x++)
+                                {
+                                    for (var y = 0; y <= 2; y++)
+                                    {
+                                        if (grid[xCell + x, yCell + y] == 0 && NumberAt(xCell + x, (yCell + y), num))
+                                        {
+                                            possibilities++;
+                                            bestX = xCell + x;
+                                            bestY = yCell + y;
+                                        }
+                                    } //end for y
+                                } //end for x
+                                if (possibilities == 1)
+                                {
+                                    grid[bestX, bestY] = num;
+                                    numberPlaced = true;
+                                }
+                            } //end for yCell
+                        } //end for xCell
+                    } //end for num
+                } while (numberPlaced);
+            }
         }
     }
 }

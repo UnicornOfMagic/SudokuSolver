@@ -1,0 +1,10 @@
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\ToolBox\obj\Debug\ToolBox.csprojResolveAssemblyReference.cache
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\ToolBox\bin\Debug\ToolBox.dll
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\ToolBox\bin\Debug\ToolBox.pdb
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\ToolBox\obj\Debug\ToolBox.dll
+C:\Users\jafeld\Source\Workspaces\LoginTesting\SudokuSolver\ToolBox\obj\Debug\ToolBox.pdb
+C:\Users\jafeld\Source\Repos\SudokuSolver\ToolBox\bin\Debug\ToolBox.dll
+C:\Users\jafeld\Source\Repos\SudokuSolver\ToolBox\bin\Debug\ToolBox.pdb
+C:\Users\jafeld\Source\Repos\SudokuSolver\ToolBox\obj\Debug\ToolBox.csprojResolveAssemblyReference.cache
+C:\Users\jafeld\Source\Repos\SudokuSolver\ToolBox\obj\Debug\ToolBox.dll
+C:\Users\jafeld\Source\Repos\SudokuSolver\ToolBox\obj\Debug\ToolBox.pdb
