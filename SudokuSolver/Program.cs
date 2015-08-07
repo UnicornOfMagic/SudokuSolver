@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using ToolBox;
 
@@ -217,6 +218,7 @@ namespace SudokuSolver
 
         private static string DoCombineStrings()
         {
+            Console.WriteLine();
             var result = "";
             var exit = false;
             var done = false;
@@ -280,12 +282,37 @@ namespace SudokuSolver
             if (theString.Equals(""))
             {
                 Console.WriteLine("\nYou haven't made a string yet!\n\nRunning stringCombiner...");
+                theString = DoCombineStrings();
             }
+
+            var exit = false;
+            var path = "";
+
+            do
+            {
+                Console.WriteLine("\n\n Please type the full path of the file you want to write:");
+                path = Console.ReadLine();
+                Console.WriteLine("\nIs this the correct path?\n{0}\n(y or n): ", path);
+                if (Console.ReadKey().KeyChar.ToString().ToUpper().Equals("Y")) exit = true;
+            } while (!exit);
+
+            Tools.WriteToFile(path, theString);
         }
 
         private static void DoReadFromFile()
         {
-            throw new NotImplementedException();
+            var exit = false;
+            var path = "";
+
+            do
+            {
+                Console.WriteLine("\n\n Please type the full path of the file you want to write:");
+                path = Console.ReadLine();
+                Console.Write("\nIs this the correct path?\n{0}\n(y or n): ", path);
+                if (Console.ReadKey().KeyChar.ToString().ToUpper().Equals("Y")) exit = true;
+            } while (!exit);
+            Console.Write("\nDo you want to see what I read? (y or n): ");
+            Tools.ReadFromFile(path, Console.ReadKey().KeyChar.ToString().ToUpper().Equals("Y"));
         }
 
         private static void DoAddNumbers()

@@ -93,11 +93,11 @@ namespace ToolBox
             }
             catch (AccessViolationException)
             {
-                Console.WriteLine("Not sufficiently elevated for that file!");
+                Console.WriteLine("\n**Not sufficiently elevated for that file!**");
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("I couldn't find that file!");
+                Console.WriteLine("\n**I couldn't find that file!");
                 Console.Write("Would you like me to make the file for you (y/n, default = y)? : ");
                 var userInput = Console.ReadLine() ?? "y";
                 if (!userInput.ToUpper().StartsWith("Y")) return sb.ToString();
@@ -117,16 +117,16 @@ namespace ToolBox
                         
                 if (printToScreen)
                 {
-                    Console.WriteLine(sb.ToString());
+                    Console.WriteLine("\n" + sb);
                 }
                 return sb.ToString();
             }
             catch (IOException)
             {
-                Console.WriteLine("There was an error trying to read the file.");
+                Console.WriteLine("\n**There was an error trying to read the file**");
             }
 
-            Console.WriteLine("IF YOU SEE THIS SOMETHING WENT WRONG");
+            Console.WriteLine("\n***********\nIF YOU SEE THIS SOMETHING WENT WRONG\n************\n");
             return "You should never see this.";
         }
 
