@@ -64,7 +64,7 @@ namespace ToolBox
                     }
                 }
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 Console.WriteLine("There was an error trying to write to the file.\nStackTrace:" + e.StackTrace + "\nDump:" + e);
             }
@@ -148,7 +148,8 @@ namespace ToolBox
                 Console.WriteLine("\n---------------------\n******Main Menu******\n---------------------\n");
                 Console.WriteLine("1. Sudoku (WIP)");
                 Console.WriteLine("2. ToolBox Testing");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("3. Hot Dog");
+                Console.WriteLine("4. Exit");
                 Console.Write("\nPlease choose an option! : ");
             }
         }

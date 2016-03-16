@@ -18,6 +18,7 @@ namespace SudokuSolver
         {
             Sudoku,
             ToolBox,
+            HotDog,
             Exit,
             Error
         };
@@ -52,6 +53,7 @@ namespace SudokuSolver
                 }
                 tb.MainMenu(false);
                 var userInput = Console.ReadKey().KeyChar.ToString();
+                Console.WriteLine("\n");
                 int intUserInput;
                 int.TryParse(userInput, out intUserInput);
                 MainMenuChoices choice;
@@ -68,6 +70,11 @@ namespace SudokuSolver
                         break;
                     }
                     case 3:
+                    {
+                        choice = MainMenuChoices.HotDog;
+                        break;
+                    }
+                    case 4:
                     {
                         choice = MainMenuChoices.Exit;
                         break;
@@ -86,6 +93,9 @@ namespace SudokuSolver
                         break;
                     case MainMenuChoices.Sudoku:
                         DoSudoku();
+                        break;
+                    case MainMenuChoices.HotDog:
+                        DoHotDog();
                         break;
                     case MainMenuChoices.ToolBox:
                         DoToolBox(tb);
@@ -131,6 +141,101 @@ namespace SudokuSolver
                 } //end switch(choice) -- YES I KNOW THIS IS POINTLESS
             } //end while(!exit)
 
+        }
+
+        private static void DoHotDog()
+        {
+            var done = false;
+            Console.WriteLine("\n*******************\nWelcome to HotDog!!\n*******************\n");
+            while (!done)
+            {
+                Console.WriteLine("\nHotDog Menu:");
+                Console.WriteLine("1. Enter a number");
+                Console.WriteLine("2. Generate a random numer");
+                Console.WriteLine("3. Exit");
+                Console.Write("Please choose a menu item: ");
+                var userInput = Console.ReadKey().KeyChar.ToString();
+                Console.WriteLine();
+                var temp = 0;
+                var intUserInput = int.TryParse(userInput, out temp) ? temp : 0;
+
+                switch (intUserInput)
+                {
+                    case 1:
+                        {
+                            ///Enter a number
+                            Console.Write("\nPlease enter a number for HotDogification:");
+                            var hotDogNumber = Console.ReadLine();
+                            var shoopDaWhoop = 0;
+                            var x = int.TryParse(hotDogNumber, out shoopDaWhoop) ? shoopDaWhoop : 0;
+                            HotDogItUpBaby(x);
+                            break;
+                        }
+                    case 2:
+                        {
+                            ///Randomly generate a number
+                            var r = new Random();
+                            var loopCount = 0;
+                            var x = (int)r.Next(1, 999999999);
+                            Console.Write("Attempting to generate a random number");
+                            while (loopCount < 10)
+                            {
+                                var looper = r.Next(200, 2000);
+                                Thread.Sleep(looper);
+                                Console.Write(".");
+                                loopCount++;
+                            }
+                            Thread.Sleep(1000);
+                            Console.WriteLine("\nRandom number successfully generated!");
+                            Thread.Sleep(1000);
+                            Console.WriteLine("Number generated: " + x);
+                            Thread.Sleep(1500);
+                            HotDogItUpBaby(x);
+                            break;
+                        }
+                    case 3:
+                        {
+                            ///Exit
+                            Console.WriteLine("You chose to exit!");
+                            done = true;
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("***ERROR***ERROR***ERROR***\n***INVALID*INPUT***\n");
+                            break;
+                        }
+                }
+                Console.WriteLine("\n\n");
+            }
+        }
+
+        private static void HotDogItUpBaby(int x)
+        {
+            Console.WriteLine("\nReceived " + x + " as input...\nPreparing for HotDogification...");
+            Thread.Sleep(2000);
+            Console.Write("\nCommencing the HotDogification");
+            Thread.Sleep(1200);
+            Console.Write(".");
+            Thread.Sleep(800);
+            Console.Write(".");
+            Thread.Sleep(100);
+            Console.WriteLine(".");
+            Thread.Sleep(1000);
+            var tempStr = "";
+            if (x % 2 == 0)
+            {
+                tempStr += "Hot";
+            }
+            if (x % 3 == 0)
+            {
+                tempStr += "Dog";
+            }
+
+            Console.WriteLine("\n=============================\n**HotDogification completed**\n=============================\n");
+            Thread.Sleep(1000);
+            Console.WriteLine("Result of " + x + ": " + tempStr);
+            Thread.Sleep(1000);
         }
 
         private static void DoToolBox(Tools tb)
